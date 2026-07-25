@@ -8,211 +8,70 @@ the Income Tax Ordinance, 2001, minimizing AI hallucination.
 
 > **Scope:** Personal income tax for salaried individuals & freelancers only
 > (not corporate/business tax). Informational only — not a substitute for a
-> licensed tax consultant or FBR itself. The application includes a clear
-> disclaimer encouraging users to verify important tax matters with official
-> FBR resources.
+> licensed tax consultant or FBR itself; the app will carry a clear disclaimer.
 
----
-
-# Features
-
-### Current Features
-
-- User authentication (Register/Login)
-- JWT-based protected routes
-- Secure password hashing with bcrypt
-- Persistent authentication using React Context
-- REST API architecture
-- Responsive React frontend
-- MongoDB integration
-- Modular backend structure
-- Ready for RAG document ingestion
-
-### Planned Features
-
-- FBR document processing
-- Vector database integration (ChromaDB / FAISS)
-- AI-powered tax chatbot
-- Conversation history
-- Personalized tax guidance
-- Advanced search and retrieval
-
----
-
-# Tech Stack
-
+## Tech Stack
 - **Frontend:** React, TypeScript, Tailwind CSS, Vite
-- **Backend:** Node.js, Express.js, MongoDB, Express
-- **Authentication:** JWT, bcrypt
+- **Backend:** Node.js, Express.js, MongoDB
 - **Vector DB:** ChromaDB / FAISS
 - **LLM:** Google Gemini API
 - **Tools/Deploy:** GitHub, Postman, Vercel, Render
 
----
-
-# Project Structure
-
-```text
+## Project Structure
+```
 rag-uni-chatbot/
-├── frontend/
+├── frontend/          # React + TS + Tailwind + Vite client
 │   └── src/
 │       ├── components/
-│       ├── context/
 │       ├── pages/
-│       ├── services/
-│       ├── routes/
-│       └── utils/
-│
-└── backend/
+│       ├── context/
+│       └── services/
+└── backend/           # Node + Express API
     ├── src/
-    │   ├── config/
-    │   ├── controllers/
-    │   ├── middleware/
-    │   ├── models/
     │   ├── routes/
-    │   ├── utils/
-    │   └── server.js
-    └── data/
-        └── raw-docs/
+    │   ├── controllers/
+    │   ├── models/
+    │   ├── middleware/
+    │   ├── config/
+    │   └── utils/
+    └── data/raw-docs/ # FBR guides, tax ordinance sections, slab notifications (for RAG ingestion)
 ```
 
----
+## Roadmap
+- **Module 1 (Jul 20 – Jul 26):** Project setup & architecture, frontend UI, auth system, document collection/preprocessing
+- **Module 2 (Jul 27 – Aug 02):** RAG pipeline, embeddings, vector DB integration, backend API
+- **Module 3 (Aug 03 – Aug 09):** Chatbot integration, context retrieval optimization, conversation history, performance
+- **Module 4 (Aug 10 – Aug 15):** Testing, deployment, documentation, final polish
 
-# Authentication Flow
+## Day 1 Log (Jul 20, 2026)
+- [x] Repo structure created (frontend / backend separation)
+- [x] Backend: Express server skeleton with `/api/health` route
+- [x] Backend: base config, models, middleware, controllers folders scaffolded
+- [x] Frontend: React + TS + Tailwind skeleton with landing page
+- [x] `.env.example` files for both frontend and backend
+- [x] `.gitignore` set up
+- [x] Project scope finalized: Pakistan personal income tax assistant (salaried + freelance individuals)
+- [ ] Full auth system (next)
+- [ ] FBR document collection — tax slabs, filing guides, relevant Ordinance sections (next)
 
-The application uses JWT-based authentication.
+## Day 2 Log (Jul 21, 2026)
+- [x] Backend: full authentication implemented — register/login with bcrypt password hashing
+- [x] Backend: JWT token generation + `protect` middleware for authenticated routes
+- [x] Backend: `/api/auth/me` protected route added, MongoDB connection wired into server start
+- [x] Frontend: AuthContext for global auth state (login/register/logout)
+- [x] Frontend: Login and Register pages with form validation & error handling
+- [x] Frontend: React Router wired up (`/`, `/login`, `/register`)
+- [x] Frontend: API service layer (`services/api.ts`) for talking to backend
+## Day 3 Log (Jul 22, 2026)
+- [x] Backend: document preprocessing utilities added — `chunkText` (char-based) and `chunkByMarkdownSection` (section-based) for RAG ingestion
+- [x] Backend: template reference docs added to `data/raw-docs/` (tax slabs, filing guide) outlining structure/metadata needed once populated with verified FBR content
+- [x] Frontend: Chat UI built — `ChatBubble`, `ChatInput` components and full `ChatPage`
+- [x] Frontend: `ProtectedRoute` component — `/chat` now requires login
+- [x] Frontend: Landing page linked to Login/Register flow
 
-- User registers with email and password
-- Passwords are securely hashed using **bcrypt**
-- Backend issues a signed JWT after successful login
-- JWT is stored on the client
-- Protected API routes verify the token through authentication middleware
-- AuthContext maintains authentication state throughout the frontend
-- `/api/auth/me` returns the currently authenticated user
+## Day 4 Log (Jul 23, 2026)
+- [x] Backend: centralized error handling — `notFound` (404) and global `errorHandler` middleware for consistent API error responses
+- [x] Frontend: global `Navbar` component with persistent disclaimer banner ("informational only" notice)
+- [x] Frontend: `About` page with project description and full disclaimer
+- [x] Frontend: cleaned up duplicate header logic in ChatPage now that Navbar handles navigation
 
----
-
-# Roadmap
-
-### Module 1 (Jul 20 – Jul 26)
-
-- Project setup
-- Frontend architecture
-- Backend architecture
-- Authentication system
-- Document collection & preprocessing
-
-### Module 2 (Jul 27 – Aug 02)
-
-- RAG pipeline
-- Embeddings
-- Vector database integration
-- Backend AI APIs
-
-### Module 3 (Aug 03 – Aug 09)
-
-- Chatbot integration
-- Context retrieval optimization
-- Conversation history
-- Performance improvements
-
-### Module 4 (Aug 10 – Aug 15)
-
-- Testing
-- Deployment
-- Documentation
-- Final polish
-
----
-
-# Development Log
-
-## Day 1 (Jul 20, 2026)
-
-- ✅ Repository initialized
-- ✅ Frontend (React + TypeScript + Tailwind) scaffolded
-- ✅ Backend (Express) scaffolded
-- ✅ Base folder structure created
-- ✅ Health check endpoint added
-- ✅ Environment configuration prepared
-- ✅ Project scope finalized
-
----
-
-## Day 2 (Jul 21, 2026)
-
-### Backend
-
-- ✅ Implemented secure authentication system
-- ✅ Added bcrypt password hashing
-- ✅ JWT token generation for authenticated users
-- ✅ Authentication middleware for protected routes
-- ✅ Added `/api/auth/me` endpoint
-- ✅ Configured MongoDB connection
-
-### Frontend
-
-- ✅ Created global `AuthContext`
-- ✅ Built Login page
-- ✅ Built Register page
-- ✅ Added client-side form validation
-- ✅ Configured React Router authentication flow
-- ✅ Added centralized API service layer
-- ✅ Connected frontend authentication with backend APIs
-
-## Day 3 (Jul 22, 2026)
-
-### Backend
-
-- ✅ Added document preprocessing utilities for the upcoming RAG pipeline
-- ✅ Implemented character-based text chunking
-- ✅ Implemented Markdown section-based chunking
-- ✅ Added template reference documents for FBR tax slabs
-- ✅ Added template reference documents for tax filing guide structure
-- ✅ Organized preprocessing resources for future document ingestion
-
-### Frontend
-
-- ✅ Built the chatbot interface
-- ✅ Added reusable message bubble components
-- ✅ Created chat input component
-- ✅ Developed the main chat page layout
-- ✅ Implemented `ProtectedRoute` to restrict chat access to authenticated users
-- ✅ Connected routing so only logged-in users can access the chatbot
-
-**Status:** Module 1 (Project Setup, Authentication, UI Foundation & Document Preparation) is complete. Development now moves into Module 2 with the RAG pipeline, embeddings, and vector database integration.
-
----
-
----
-
-# Setup
-
-## Backend
-
-```bash
-cd backend
-npm install
-npm run dev
-```
-
-## Frontend
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
----
-
-# Future Work
-
-- Integrate FBR documents
-- Build RAG pipeline
-- Generate embeddings
-- Store vectors in ChromaDB/FAISS
-- Connect Gemini API
-- Implement AI chatbot interface
-- Improve retrieval accuracy
-- Deploy application
