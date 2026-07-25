@@ -80,3 +80,23 @@ rag-uni-chatbot/
 - [x] Frontend: static `FAQ` page with common tax-filing questions
 - [x] Frontend: routes and nav links wired up for Profile and FAQ
 
+## Day 6 Log (Jul 25, 2026)
+- [x] Backend: Postman collection added (`postman_collection.json`) for manually testing health check, register, login, and protected `/me` endpoint
+- [x] Manual testing pass on auth flow (register, login, protected route access, invalid credential handling)
+- [x] Code cleanup and comment pass across backend controllers/middleware and frontend components
+- [x] README documentation finalized for Module 1
+
+**Module 1 complete** — project setup, full auth system, document preprocessing utilities, and core UI (landing, auth, chat skeleton, about, FAQ, profile) all in place.
+
+## Setup (local dev)
+```bash
+# Backend
+cd backend
+npm install
+npm run dev
+
+# Frontend
+cd frontend
+npm install
+npm run dev
+```
