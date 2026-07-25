@@ -15,9 +15,11 @@ export default function Navbar() {
         </Link>
         <div className="flex items-center gap-4 text-sm text-slate-500">
           <Link to="/about">About</Link>
+          <Link to="/faq">FAQ</Link>
           {user ? (
             <>
               <Link to="/chat">Chat</Link>
+              <Link to="/profile">Profile</Link>
               <button onClick={logout} className="underline">
                 Log out
               </button>

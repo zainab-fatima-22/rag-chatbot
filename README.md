@@ -75,3 +75,8 @@ rag-uni-chatbot/
 - [x] Frontend: `About` page with project description and full disclaimer
 - [x] Frontend: cleaned up duplicate header logic in ChatPage now that Navbar handles navigation
 
+## Day 5 Log (Jul 24, 2026)
+- [x] Frontend: `Profile` page (protected) showing logged-in user's name, email, role
+- [x] Frontend: static `FAQ` page with common tax-filing questions
+- [x] Frontend: routes and nav links wired up for Profile and FAQ
+
