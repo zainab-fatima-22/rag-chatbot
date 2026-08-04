@@ -107,7 +107,13 @@ rag-uni-chatbot/
 - [x] Frontend: `services/api.ts` — added `sendChatMessage` to call the real `/api/chat` endpoint
 - [x] Frontend: `ChatPage` now sends real messages to the backend, shows a loading state while waiting on a response, and displays errors inline instead of a placeholder reply
 - [x] End-to-end RAG flow now connected: frontend → `/api/chat` → retrieval → Gemini generation → response
-- [ ] Testing, retrieval tuning, and Module 2 wrap-up (next)
+## Day 12 Log (Aug 1, 2026)
+- [x] Backend: `scripts/evalRetrieval.js` — runs sample questions through the retriever to sanity-check which sources/scores come back, for tuning `MIN_SCORE`/`topK`
+- [x] Manual end-to-end testing of the chat flow (login → ask question → retrieval → generated answer)
+- [x] Documentation pass — README updated with ingestion (`npm run ingest`) and retrieval eval (`npm run eval:retrieval`) commands
+- [x] Code cleanup across services/controllers added this module
+
+**Module 2 complete** — RAG pipeline is fully wired: document chunking → embedding generation (Gemini) → vector storage/retrieval → grounded answer generation, connected end-to-end from the chat UI to the backend.
 
 ## Setup (local dev)
 ```bash
@@ -115,6 +121,12 @@ rag-uni-chatbot/
 cd backend
 npm install
 npm run dev
+
+# Ingest documents from data/raw-docs into the vector store
+npm run ingest
+
+# Sanity-check retrieval quality with sample questions
+npm run eval:retrieval
 
 # Frontend
 cd frontend
