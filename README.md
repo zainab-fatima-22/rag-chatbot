@@ -118,7 +118,10 @@ rag-uni-chatbot/
 ## Day 13 Log (Aug 3, 2026)
 - [x] Backend: refined system prompt — now instructs the model to ask for missing details (e.g. income amount) on vague questions instead of guessing
 - [x] Frontend: added an animated `TypingIndicator` component, replacing the plain "Thinking..." text while waiting on a response
-- [ ] Context retrieval optimization (next)
+## Day 14 Log (Aug 4, 2026)
+- [x] Backend: `retrieverService.js` refactored — `topK` and `minScore` are now configurable options instead of hardcoded, making it easier to tune retrieval quality
+- [x] Backend: added light query preprocessing (trims greetings/filler phrases like "hey" or "can you tell me") so embeddings better reflect the actual question
+- [ ] Conversation history (next)
 
 ## Setup (local dev)
 ```bash
