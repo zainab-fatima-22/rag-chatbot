@@ -99,7 +99,11 @@ rag-uni-chatbot/
 - [x] Backend: `retrieverService.js` — combines query embedding + vector search into a single `retrieveRelevantChunks` function
 - [x] Added minimum relevance score filtering so low-relevance chunks aren't forced into the prompt context
 - [x] Added `formatContextForPrompt` helper to build a citation-friendly context block for the LLM
-- [ ] `/api/chat` endpoint wiring retrieval + generation together (next)
+## Day 10 Log (Jul 30, 2026)
+- [x] Backend: `generationService.js` — wraps Gemini's `generateContent` API with a system prompt that grounds answers in retrieved context only, and reminds users to confirm with FBR/a consultant
+- [x] Backend: `chat.controller.js` and `POST /api/chat` (protected) — full RAG pipeline now wired end-to-end: retrieve → build context → generate → return answer + sources
+- [x] Added chat endpoint to the Postman collection
+- [ ] Frontend wiring to the real endpoint (next)
 
 ## Setup (local dev)
 ```bash
