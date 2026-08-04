@@ -115,6 +115,11 @@ rag-uni-chatbot/
 
 **Module 2 complete** — RAG pipeline is fully wired: document chunking → embedding generation (Gemini) → vector storage/retrieval → grounded answer generation, connected end-to-end from the chat UI to the backend.
 
+## Day 13 Log (Aug 3, 2026)
+- [x] Backend: refined system prompt — now instructs the model to ask for missing details (e.g. income amount) on vague questions instead of guessing
+- [x] Frontend: added an animated `TypingIndicator` component, replacing the plain "Thinking..." text while waiting on a response
+- [ ] Context retrieval optimization (next)
+
 ## Setup (local dev)
 ```bash
 # Backend

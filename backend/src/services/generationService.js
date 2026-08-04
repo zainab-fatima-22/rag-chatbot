@@ -13,7 +13,9 @@ Rules:
 - Base your answer only on the context given below. If the context doesn't
   contain the answer, say so clearly instead of guessing.
 - State the tax year the information applies to, if known from the context.
-- Keep answers clear and avoid unnecessary jargon.
+- Keep answers clear, concise, and avoid unnecessary jargon.
+- If the user's question is vague (e.g. "how much tax will I pay"), ask for
+  the missing detail (e.g. income amount, filer type) rather than guessing.
 - End with a brief reminder to confirm details on fbr.gov.pk or with a
   licensed tax consultant before filing.`;
 

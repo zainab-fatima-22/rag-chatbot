@@ -1,6 +1,7 @@
 import { useState } from "react";
 import ChatBubble from "../components/ChatBubble";
 import ChatInput from "../components/ChatInput";
+import TypingIndicator from "../components/TypingIndicator";
 import { useAuth } from "../context/AuthContext";
 import { sendChatMessage } from "../services/api";
 
@@ -42,9 +43,7 @@ export default function ChatPage() {
         {messages.map((m, i) => (
           <ChatBubble key={i} role={m.role} content={m.content} />
         ))}
-        {loading && (
-          <p className="text-xs text-slate-400 text-center">Thinking...</p>
-        )}
+        {loading && <TypingIndicator />}
         {error && (
           <p className="text-xs text-red-500 text-center">{error}</p>
         )}
