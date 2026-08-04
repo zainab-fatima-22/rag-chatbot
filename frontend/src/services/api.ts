@@ -23,3 +23,10 @@ export const loginUser = (email: string, password: string) =>
 
 export const getCurrentUser = (token: string) =>
   request("/auth/me", { headers: { Authorization: `Bearer ${token}` } });
+
+export const sendChatMessage = (message: string, token: string) =>
+  request("/chat", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+    body: JSON.stringify({ message }),
+  });

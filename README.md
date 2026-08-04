@@ -103,7 +103,11 @@ rag-uni-chatbot/
 - [x] Backend: `generationService.js` — wraps Gemini's `generateContent` API with a system prompt that grounds answers in retrieved context only, and reminds users to confirm with FBR/a consultant
 - [x] Backend: `chat.controller.js` and `POST /api/chat` (protected) — full RAG pipeline now wired end-to-end: retrieve → build context → generate → return answer + sources
 - [x] Added chat endpoint to the Postman collection
-- [ ] Frontend wiring to the real endpoint (next)
+## Day 11 Log (Jul 31, 2026)
+- [x] Frontend: `services/api.ts` — added `sendChatMessage` to call the real `/api/chat` endpoint
+- [x] Frontend: `ChatPage` now sends real messages to the backend, shows a loading state while waiting on a response, and displays errors inline instead of a placeholder reply
+- [x] End-to-end RAG flow now connected: frontend → `/api/chat` → retrieval → Gemini generation → response
+- [ ] Testing, retrieval tuning, and Module 2 wrap-up (next)
 
 ## Setup (local dev)
 ```bash
