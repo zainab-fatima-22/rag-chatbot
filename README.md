@@ -95,7 +95,11 @@ rag-uni-chatbot/
 ## Day 8 Log (Jul 28, 2026)
 - [x] Backend: `embeddingService.js` — wraps Gemini's `text-embedding-004` model to generate vector embeddings for text chunks
 - [x] Backend: wired embedding generation into `ingest.js` — script now chunks docs, embeds each chunk, and stores them in the vector store
-- [ ] Retrieval / similarity search wiring into a real endpoint (next)
+## Day 9 Log (Jul 29, 2026)
+- [x] Backend: `retrieverService.js` — combines query embedding + vector search into a single `retrieveRelevantChunks` function
+- [x] Added minimum relevance score filtering so low-relevance chunks aren't forced into the prompt context
+- [x] Added `formatContextForPrompt` helper to build a citation-friendly context block for the LLM
+- [ ] `/api/chat` endpoint wiring retrieval + generation together (next)
 
 ## Setup (local dev)
 ```bash
