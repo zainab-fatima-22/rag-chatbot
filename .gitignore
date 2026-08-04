@@ -7,3 +7,4 @@ build/
 .DS_Store
 data/raw-docs/*
 !data/raw-docs/.gitkeep
+data/vector-store.json
