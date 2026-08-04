@@ -92,7 +92,10 @@ rag-uni-chatbot/
 - [x] Backend: lightweight file-backed vector store (`vectorStore.js`) using cosine similarity search — stands in for ChromaDB/FAISS during early development, same `addDocuments`/`search` interface so swapping in a real vector DB later is a drop-in change
 - [x] Backend: ingestion script skeleton (`scripts/ingest.js`) — reads `data/raw-docs`, chunks by markdown section, ready for embedding step
 - [x] Added `npm run ingest` command
-- [ ] Embedding generation (next)
+## Day 8 Log (Jul 28, 2026)
+- [x] Backend: `embeddingService.js` — wraps Gemini's `text-embedding-004` model to generate vector embeddings for text chunks
+- [x] Backend: wired embedding generation into `ingest.js` — script now chunks docs, embeds each chunk, and stores them in the vector store
+- [ ] Retrieval / similarity search wiring into a real endpoint (next)
 
 ## Setup (local dev)
 ```bash
