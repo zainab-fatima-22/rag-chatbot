@@ -58,6 +58,14 @@
           "raw": "{\n  \"message\": \"What documents do I need to file my taxes?\"\n}"
         }
       }
+    },
+    {
+      "name": "Get Chat History (protected)",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Authorization", "value": "Bearer {{token}}" }],
+        "url": "{{baseUrl}}/chat/history"
+      }
     }
   ]
 }

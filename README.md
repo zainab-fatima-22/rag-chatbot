@@ -121,7 +121,12 @@ rag-uni-chatbot/
 ## Day 14 Log (Aug 4, 2026)
 - [x] Backend: `retrieverService.js` refactored — `topK` and `minScore` are now configurable options instead of hardcoded, making it easier to tune retrieval quality
 - [x] Backend: added light query preprocessing (trims greetings/filler phrases like "hey" or "can you tell me") so embeddings better reflect the actual question
-- [ ] Conversation history (next)
+## Day 15 Log (Aug 5, 2026)
+- [x] Backend: `Conversation` model added — stores per-user message history (role, content, sources, timestamps)
+- [x] Backend: `POST /api/chat` now saves each user message + assistant reply to the user's conversation
+- [x] Backend: `GET /api/chat/history` (protected) — returns the user's saved conversation
+- [x] Added history endpoint to the Postman collection
+- [ ] Displaying history on the frontend (next)
 
 ## Setup (local dev)
 ```bash
