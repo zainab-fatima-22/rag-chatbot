@@ -126,7 +126,10 @@ rag-uni-chatbot/
 - [x] Backend: `POST /api/chat` now saves each user message + assistant reply to the user's conversation
 - [x] Backend: `GET /api/chat/history` (protected) — returns the user's saved conversation
 - [x] Added history endpoint to the Postman collection
-- [ ] Displaying history on the frontend (next)
+## Day 16 Log (Aug 6, 2026)
+- [x] Frontend: `getChatHistory` added to the API service
+- [x] Frontend: `ChatPage` now loads and displays the user's saved conversation on mount, with a loading state, falling back gracefully to just the welcome message if there's no history yet
+- [ ] Performance improvements — embedding cache, response timing (next)
 
 ## Setup (local dev)
 ```bash

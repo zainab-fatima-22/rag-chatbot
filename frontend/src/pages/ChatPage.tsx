@@ -1,26 +1,43 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ChatBubble from "../components/ChatBubble";
 import ChatInput from "../components/ChatInput";
 import TypingIndicator from "../components/TypingIndicator";
 import { useAuth } from "../context/AuthContext";
-import { sendChatMessage } from "../services/api";
+import { sendChatMessage, getChatHistory } from "../services/api";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
 }
 
+const WELCOME_MESSAGE: Message = {
+  role: "assistant",
+  content:
+    "Hi! I can help explain Pakistan personal income tax — slabs, deductions, and filing steps. Ask me anything.",
+};
+
 export default function ChatPage() {
   const { user } = useAuth();
-  const [messages, setMessages] = useState<Message[]>([
-    {
-      role: "assistant",
-      content:
-        "Hi! I can help explain Pakistan personal income tax — slabs, deductions, and filing steps. Ask me anything.",
-    },
-  ]);
+  const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
   const [loading, setLoading] = useState(false);
+  const [historyLoading, setHistoryLoading] = useState(true);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    async function loadHistory() {
+      try {
+        const data = await getChatHistory(user!.token);
+        if (data.messages && data.messages.length > 0) {
+          setMessages([WELCOME_MESSAGE, ...data.messages]);
+        }
+      } catch {
+        // No history yet, or failed to load — fall back to just the welcome message
+      } finally {
+        setHistoryLoading(false);
+      }
+    }
+    loadHistory();
+  }, [user]);
 
   const handleSend = async (content: string) => {
     setError("");
@@ -40,13 +57,13 @@ export default function ChatPage() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50">
       <main className="flex-1 overflow-y-auto p-4 max-w-2xl w-full mx-auto">
-        {messages.map((m, i) => (
-          <ChatBubble key={i} role={m.role} content={m.content} />
-        ))}
-        {loading && <TypingIndicator />}
-        {error && (
-          <p className="text-xs text-red-500 text-center">{error}</p>
+        {historyLoading ? (
+          <p className="text-xs text-slate-400 text-center">Loading conversation...</p>
+        ) : (
+          messages.map((m, i) => <ChatBubble key={i} role={m.role} content={m.content} />)
         )}
+        {loading && <TypingIndicator />}
+        {error && <p className="text-xs text-red-500 text-center">{error}</p>}
       </main>
 
       <div className="max-w-2xl w-full mx-auto">

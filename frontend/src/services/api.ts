@@ -30,3 +30,6 @@ export const sendChatMessage = (message: string, token: string) =>
     headers: { Authorization: `Bearer ${token}` },
     body: JSON.stringify({ message }),
   });
+
+export const getChatHistory = (token: string) =>
+  request("/chat/history", { headers: { Authorization: `Bearer ${token}` } });
