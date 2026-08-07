@@ -3,6 +3,7 @@ import cors from "cors";
 import dotenv from "dotenv";
 import { connectDB } from "./config/db.js";
 import { notFound, errorHandler } from "./middleware/error.middleware.js";
+import { requestLogger } from "./middleware/requestLogger.middleware.js";
 import healthRoutes from "./routes/health.routes.js";
 import authRoutes from "./routes/auth.routes.js";
 import chatRoutes from "./routes/chat.routes.js";
@@ -15,6 +16,7 @@ const PORT = process.env.PORT || 5000;
 
 app.use(cors({ origin: process.env.CLIENT_URL || "*" }));
 app.use(express.json());
+app.use(requestLogger);
 
 app.use("/api/health", healthRoutes);
 app.use("/api/auth", authRoutes);

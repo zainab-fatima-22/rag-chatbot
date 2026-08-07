@@ -8,7 +8,18 @@
 const EMBED_ENDPOINT =
   "https://generativelanguage.googleapis.com/v1beta/models/text-embedding-004:embedContent";
 
+// Simple in-memory cache — avoids re-embedding identical queries within the
+// same server run (e.g. common questions like "what documents do I need").
+// Not persisted across restarts; a Redis-backed cache would be the natural
+// upgrade if this needs to survive restarts or scale across instances.
+const embeddingCache = new Map();
+
 export async function generateEmbedding(text) {
+  const cacheKey = text.trim().toLowerCase();
+  if (embeddingCache.has(cacheKey)) {
+    return embeddingCache.get(cacheKey);
+  }
+
   const apiKey = process.env.GEMINI_API_KEY;
   if (!apiKey) {
     throw new Error("GEMINI_API_KEY is not set in environment variables");
@@ -29,7 +40,9 @@ export async function generateEmbedding(text) {
   }
 
   const data = await res.json();
-  return data.embedding.values;
+  const embedding = data.embedding.values;
+  embeddingCache.set(cacheKey, embedding);
+  return embedding;
 }
 
 /**

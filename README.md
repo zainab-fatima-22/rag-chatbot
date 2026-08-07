@@ -129,7 +129,10 @@ rag-uni-chatbot/
 ## Day 16 Log (Aug 6, 2026)
 - [x] Frontend: `getChatHistory` added to the API service
 - [x] Frontend: `ChatPage` now loads and displays the user's saved conversation on mount, with a loading state, falling back gracefully to just the welcome message if there's no history yet
-- [ ] Performance improvements — embedding cache, response timing (next)
+## Day 17 Log (Aug 7, 2026)
+- [x] Backend: added an in-memory embedding cache to `embeddingService.js` — avoids re-embedding identical/repeated queries within a server run
+- [x] Backend: `requestLogger` middleware — logs method, path, status, and response time for every request, particularly useful for watching `/api/chat` latency
+- [ ] Final testing and bug fixes for Module 3 (next)
 
 ## Setup (local dev)
 ```bash
