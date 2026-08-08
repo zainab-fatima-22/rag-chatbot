@@ -132,7 +132,13 @@ rag-uni-chatbot/
 ## Day 17 Log (Aug 7, 2026)
 - [x] Backend: added an in-memory embedding cache to `embeddingService.js` — avoids re-embedding identical/repeated queries within a server run
 - [x] Backend: `requestLogger` middleware — logs method, path, status, and response time for every request, particularly useful for watching `/api/chat` latency
-- [ ] Final testing and bug fixes for Module 3 (next)
+## Day 18 Log (Aug 8, 2026)
+- [x] Bug fix: conversation history could grow unbounded for long-running users — capped to the most recent 100 messages (50 exchanges) on save
+- [x] Added message length validation (max 1000 characters) on both backend and frontend
+- [x] Full regression pass on Module 3 features — chatbot responses, retrieval tuning, conversation history load/save, performance logging
+- [x] Documentation finalized for Module 3
+
+**Module 3 complete** — chatbot is fully integrated with tuned retrieval, persistent per-user conversation history, and basic performance safeguards (embedding cache, response logging, input limits).
 
 ## Setup (local dev)
 ```bash

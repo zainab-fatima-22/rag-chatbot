@@ -11,6 +11,10 @@ export const sendMessage = async (req, res) => {
       return res.status(400).json({ message: "message is required" });
     }
 
+    if (message.length > 1000) {
+      return res.status(400).json({ message: "message is too long (max 1000 characters)" });
+    }
+
     const chunks = await retrieveRelevantChunks(message);
     const context = formatContextForPrompt(chunks);
     const answer = await generateAnswer(message, context);
@@ -24,6 +28,14 @@ export const sendMessage = async (req, res) => {
     }
     conversation.messages.push({ role: "user", content: message });
     conversation.messages.push({ role: "assistant", content: answer, sources });
+
+    // Bug found during testing: conversation.messages would grow unbounded
+    // for long-running users, slowing down history loads. Cap to the most
+    // recent 100 messages (50 exchanges).
+    if (conversation.messages.length > 100) {
+      conversation.messages = conversation.messages.slice(-100);
+    }
+
     await conversation.save();
 
     return res.status(200).json({ answer, sources });
