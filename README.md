@@ -171,7 +171,24 @@ Full endpoint documentation: [`docs/API.md`](docs/API.md)
 ## Day 23 Log (Aug 14, 2026)
 - [x] Frontend: chat window now auto-scrolls to the latest message as the conversation updates
 - [x] Frontend: accessibility pass — added `aria-live`/`role="log"` to the message list, `role="alert"` on error text, and an accessible label on the chat input
-- [ ] Final review and presentation prep (next)
+## Day 24 Log (Aug 15, 2026)
+- [x] Added `docs/DEMO_SCRIPT.md` — walkthrough script for presenting the project (problem, live demo steps, architecture recap, what's tested, next steps)
+- [x] Final full regression pass across all modules — auth, RAG chat, history, deployment configs
+- [x] README reviewed end-to-end for accuracy and completeness
+
+**Module 4 complete — project complete.** Tax-Assist AI now has full auth,
+a working RAG pipeline grounded in source documents, persistent conversation
+history, automated + manual testing, deployment configs for Render/Vercel,
+and full documentation (`README.md`, `docs/API.md`, `docs/DEMO_SCRIPT.md`).
+
+## Known Limitations / Honest Next Steps
+- Source documents in `data/raw-docs/` are structural templates, not yet
+  populated with verified FBR content — retrieval quality depends entirely
+  on replacing these with real, citation-checked source text
+- Vector store is a simple in-process file-backed implementation, fine for
+  a small document set but not built for production scale
+- One conversation thread per user (no multiple named chats yet)
+- No streaming responses — the chat waits for the full answer before showing it
 
 ## Deployment
 - **Backend → Render:** connect the repo, Render will pick up `backend/render.yaml`. Set `MONGODB_URI`, `GEMINI_API_KEY`, `JWT_SECRET`, and `CLIENT_URL` (your deployed frontend URL) in the Render dashboard.
