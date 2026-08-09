@@ -181,6 +181,14 @@ a working RAG pipeline grounded in source documents, persistent conversation
 history, automated + manual testing, deployment configs for Render/Vercel,
 and full documentation (`README.md`, `docs/API.md`, `docs/DEMO_SCRIPT.md`).
 
+## Design System
+The UI uses a "ledger & stamp" visual identity — fitting for an official
+tax document assistant:
+- **Colors:** deep pine green (`ink`) + brass/gold accent (`brass`) on a warm paper background
+- **Type:** Fraunces (display serif) for headings, Inter for body text, IBM Plex Mono for data/labels
+- **Signature element:** a circular ink-stamp mark (`StampMark.tsx`) used as the brand mark throughout
+- Chat messages are styled as stamped memos (assistant) and ink-stamped notes (user) rather than generic rounded bubbles
+
 ## Known Limitations / Honest Next Steps
 - Source documents in `data/raw-docs/` are structural templates, not yet
   populated with verified FBR content — retrieval quality depends entirely

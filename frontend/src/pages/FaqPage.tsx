@@ -19,15 +19,25 @@ const faqs = [
 
 export default function FaqPage() {
   return (
-    <div className="max-w-xl mx-auto px-4 py-10">
-      <h1 className="text-2xl font-bold mb-6 text-slate-800">Frequently Asked Questions</h1>
-      <div className="space-y-4">
-        {faqs.map((item, i) => (
-          <div key={i} className="bg-white shadow rounded-xl p-4">
-            <p className="font-medium text-slate-800 mb-1">{item.q}</p>
-            <p className="text-sm text-slate-500">{item.a}</p>
-          </div>
-        ))}
+    <div className="min-h-[calc(100vh-40px)] bg-paper-dim px-4 py-16">
+      <div className="max-w-xl mx-auto">
+        <p className="font-mono text-xs tracking-[0.2em] text-brass-dark mb-2 text-center">
+          RECORDED QUESTIONS
+        </p>
+        <h1 className="font-display text-3xl font-medium mb-8 text-ink text-center">
+          Frequently Asked
+        </h1>
+        <div className="border-t border-paper-line">
+          {faqs.map((item, i) => (
+            <details key={i} className="group border-b border-paper-line py-4">
+              <summary className="flex items-baseline gap-3 cursor-pointer list-none">
+                <span className="font-mono text-xs text-brass-dark shrink-0">{String(i + 1).padStart(2, "0")}</span>
+                <span className="font-display text-ink font-medium">{item.q}</span>
+              </summary>
+              <p className="text-sm text-muted leading-relaxed mt-3 pl-7">{item.a}</p>
+            </details>
+          ))}
+        </div>
       </div>
     </div>
   );

@@ -40,7 +40,6 @@ export default function ChatPage() {
     loadHistory();
   }, [user]);
 
-  // Auto-scroll to the latest message whenever the conversation updates
   useEffect(() => {
     bottomRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [messages, loading]);
@@ -61,21 +60,25 @@ export default function ChatPage() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-slate-50">
+    <div className="min-h-[calc(100vh-40px)] flex flex-col bg-paper-dim">
+      <div className="bg-ink text-paper px-4 py-2.5 text-center">
+        <p className="font-mono text-xs tracking-[0.15em]">CASE FILE — INCOME TAX INQUIRY</p>
+      </div>
+
       <main
-        className="flex-1 overflow-y-auto p-4 max-w-2xl w-full mx-auto"
+        className="flex-1 overflow-y-auto p-5 max-w-2xl w-full mx-auto bg-ledger bg-paper"
         role="log"
         aria-live="polite"
         aria-label="Chat conversation"
       >
         {historyLoading ? (
-          <p className="text-xs text-slate-400 text-center">Loading conversation...</p>
+          <p className="text-xs text-muted font-mono text-center">LOADING RECORD...</p>
         ) : (
           messages.map((m, i) => <ChatBubble key={i} role={m.role} content={m.content} />)
         )}
         {loading && <TypingIndicator />}
         {error && (
-          <p className="text-xs text-red-500 text-center" role="alert">
+          <p className="text-xs text-red-700 bg-red-50 border border-red-200 rounded px-3 py-2 text-center" role="alert">
             {error}
           </p>
         )}

@@ -1,3 +1,20 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-paper text-text font-body;
+  }
+  h1, h2, h3 {
+    @apply font-display;
+  }
+  ::selection {
+    background-color: #C9A227;
+    color: #1B3A2B;
+  }
+  *:focus-visible {
+    outline: 2px solid #C9A227;
+    outline-offset: 2px;
+  }
+}
