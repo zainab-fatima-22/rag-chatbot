@@ -37,6 +37,18 @@ rag-uni-chatbot/
     └── data/raw-docs/ # FBR guides, tax ordinance sections, slab notifications (for RAG ingestion)
 ```
 
+## Architecture Overview
+```
+User → Frontend (React/Vite) → Backend (Express)
+                                    ├─ Auth (JWT + bcrypt) → MongoDB (Users)
+                                    └─ /api/chat
+                                        ├─ embeddingService (Gemini embeddings)
+                                        ├─ vectorStore (cosine similarity search)
+                                        ├─ generationService (Gemini generateContent)
+                                        └─ Conversation model → MongoDB (chat history)
+```
+Full endpoint documentation: [`docs/API.md`](docs/API.md)
+
 ## Roadmap
 - **Module 1 (Jul 20 – Jul 26):** Project setup & architecture, frontend UI, auth system, document collection/preprocessing
 - **Module 2 (Jul 27 – Aug 02):** RAG pipeline, embeddings, vector DB integration, backend API
@@ -152,7 +164,11 @@ rag-uni-chatbot/
 - [x] Backend: `render.yaml` — deployment config for Render (env vars for MongoDB URI, Gemini key, JWT secret, client URL)
 - [x] Frontend: `vercel.json` — deployment config for Vercel with SPA rewrite rule so client-side routing works on refresh
 - [x] Verified `CLIENT_URL`/CORS and `VITE_API_BASE_URL` env vars are correctly referenced for a deployed setup
-- [ ] Full documentation pass (next)
+## Day 22 Log (Aug 13, 2026)
+- [x] Added `docs/API.md` — full endpoint reference (auth, chat, health) with request/response examples and error cases
+- [x] Added an architecture overview diagram (text) to the main README linking frontend → backend → services → MongoDB
+- [x] Reviewed and tidied comments across services/controllers for clarity
+- [ ] Final optimization and polish pass (next)
 
 ## Deployment
 - **Backend → Render:** connect the repo, Render will pick up `backend/render.yaml`. Set `MONGODB_URI`, `GEMINI_API_KEY`, `JWT_SECRET`, and `CLIENT_URL` (your deployed frontend URL) in the Render dashboard.
