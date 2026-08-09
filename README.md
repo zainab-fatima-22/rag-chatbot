@@ -145,7 +145,10 @@ rag-uni-chatbot/
 - [x] Backend: unit tests for `textChunker.js` (char-based and markdown-section chunking, including edge cases like empty/short text)
 - [x] Backend: unit tests for `vectorStore.js` (similarity ranking, empty store behavior)
 - [x] Added `npm test` command
-- [ ] Bug fixes from testing pass (next)
+## Day 20 Log (Aug 11, 2026)
+- [x] Bug fix: emails weren't normalized on register/login, so the same address with different casing was treated as separate accounts — now trimmed and lowercased consistently
+- [x] Bug fix: login/register forms could be submitted multiple times while a request was in flight — buttons now disable and show a loading label during submission
+- [ ] Deployment configuration (next)
 
 ## Setup (local dev)
 ```bash

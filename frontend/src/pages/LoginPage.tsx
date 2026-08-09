@@ -6,17 +6,22 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (submitting) return;
     setError("");
+    setSubmitting(true);
     try {
       await login(email, password);
       navigate("/chat");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Login failed");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -41,8 +46,8 @@ export default function LoginPage() {
           className="w-full border rounded-lg px-3 py-2 mb-4"
           required
         />
-        <button type="submit" className="w-full bg-slate-800 text-white rounded-lg py-2 font-medium">
-          Log In
+        <button type="submit" disabled={submitting} className="w-full bg-slate-800 text-white rounded-lg py-2 font-medium disabled:opacity-50">
+          {submitting ? "Logging in..." : "Log In"}
         </button>
         <p className="text-sm text-slate-500 mt-4 text-center">
           No account? <Link to="/register" className="text-slate-800 underline">Register</Link>

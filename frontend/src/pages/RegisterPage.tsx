@@ -7,17 +7,22 @@ export default function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [submitting, setSubmitting] = useState(false);
   const { register } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (submitting) return;
     setError("");
+    setSubmitting(true);
     try {
       await register(name, email, password);
       navigate("/chat");
     } catch (err) {
       setError(err instanceof Error ? err.message : "Registration failed");
+    } finally {
+      setSubmitting(false);
     }
   };
 
@@ -50,8 +55,8 @@ export default function RegisterPage() {
           className="w-full border rounded-lg px-3 py-2 mb-4"
           required
         />
-        <button type="submit" className="w-full bg-slate-800 text-white rounded-lg py-2 font-medium">
-          Register
+        <button type="submit" disabled={submitting} className="w-full bg-slate-800 text-white rounded-lg py-2 font-medium disabled:opacity-50">
+          {submitting ? "Creating account..." : "Register"}
         </button>
         <p className="text-sm text-slate-500 mt-4 text-center">
           Already have an account? <Link to="/login" className="text-slate-800 underline">Log in</Link>
