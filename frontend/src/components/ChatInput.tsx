@@ -22,6 +22,7 @@ export default function ChatInput({ onSend, disabled }: ChatInputProps) {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         placeholder="Ask about your income tax..."
+        aria-label="Type your tax question"
         disabled={disabled}
         maxLength={1000}
         className="flex-1 border rounded-full px-4 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-slate-300"

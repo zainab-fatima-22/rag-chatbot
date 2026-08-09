@@ -168,7 +168,10 @@ Full endpoint documentation: [`docs/API.md`](docs/API.md)
 - [x] Added `docs/API.md` — full endpoint reference (auth, chat, health) with request/response examples and error cases
 - [x] Added an architecture overview diagram (text) to the main README linking frontend → backend → services → MongoDB
 - [x] Reviewed and tidied comments across services/controllers for clarity
-- [ ] Final optimization and polish pass (next)
+## Day 23 Log (Aug 14, 2026)
+- [x] Frontend: chat window now auto-scrolls to the latest message as the conversation updates
+- [x] Frontend: accessibility pass — added `aria-live`/`role="log"` to the message list, `role="alert"` on error text, and an accessible label on the chat input
+- [ ] Final review and presentation prep (next)
 
 ## Deployment
 - **Backend → Render:** connect the repo, Render will pick up `backend/render.yaml`. Set `MONGODB_URI`, `GEMINI_API_KEY`, `JWT_SECRET`, and `CLIENT_URL` (your deployed frontend URL) in the Render dashboard.
