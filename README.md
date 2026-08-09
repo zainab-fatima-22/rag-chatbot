@@ -140,6 +140,13 @@ rag-uni-chatbot/
 
 **Module 3 complete** — chatbot is fully integrated with tuned retrieval, persistent per-user conversation history, and basic performance safeguards (embedding cache, response logging, input limits).
 
+## Day 19 Log (Aug 10, 2026)
+- [x] Backend: added Jest for automated testing
+- [x] Backend: unit tests for `textChunker.js` (char-based and markdown-section chunking, including edge cases like empty/short text)
+- [x] Backend: unit tests for `vectorStore.js` (similarity ranking, empty store behavior)
+- [x] Added `npm test` command
+- [ ] Bug fixes from testing pass (next)
+
 ## Setup (local dev)
 ```bash
 # Backend
