@@ -148,7 +148,15 @@ rag-uni-chatbot/
 ## Day 20 Log (Aug 11, 2026)
 - [x] Bug fix: emails weren't normalized on register/login, so the same address with different casing was treated as separate accounts — now trimmed and lowercased consistently
 - [x] Bug fix: login/register forms could be submitted multiple times while a request was in flight — buttons now disable and show a loading label during submission
-- [ ] Deployment configuration (next)
+## Day 21 Log (Aug 12, 2026)
+- [x] Backend: `render.yaml` — deployment config for Render (env vars for MongoDB URI, Gemini key, JWT secret, client URL)
+- [x] Frontend: `vercel.json` — deployment config for Vercel with SPA rewrite rule so client-side routing works on refresh
+- [x] Verified `CLIENT_URL`/CORS and `VITE_API_BASE_URL` env vars are correctly referenced for a deployed setup
+- [ ] Full documentation pass (next)
+
+## Deployment
+- **Backend → Render:** connect the repo, Render will pick up `backend/render.yaml`. Set `MONGODB_URI`, `GEMINI_API_KEY`, `JWT_SECRET`, and `CLIENT_URL` (your deployed frontend URL) in the Render dashboard.
+- **Frontend → Vercel:** connect the repo with root directory set to `frontend/`. Set `VITE_API_BASE_URL` to your deployed backend's `/api` URL in Vercel's environment variables.
 
 ## Setup (local dev)
 ```bash
