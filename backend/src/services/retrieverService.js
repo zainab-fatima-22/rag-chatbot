@@ -10,10 +10,17 @@ const DEFAULT_TOP_K = 4;
  * embedding better reflects the actual tax question being asked.
  */
 function preprocessQuery(query) {
-  return query
-    .trim()
+  const original = typeof query === "string" ? query.trim() : "";
+  if (!original) return "";
+
+  const cleaned = original
     .replace(/^(hey|hi|hello)[,!\s]*/i, "")
-    .replace(/^(can you|could you|please)\s+/i, "");
+    .replace(/^(can you|could you|please)\s+/i, "")
+    .trim();
+
+  // Do not send an empty string to Gemini. For filler-only messages such as
+  // "hi" or "please", keep the original text so the API receives a valid Part.
+  return cleaned || original;
 }
 
 /**
@@ -28,6 +35,10 @@ export async function retrieveRelevantChunks(query, options = {}) {
   const { topK = DEFAULT_TOP_K, minScore = DEFAULT_MIN_SCORE } = options;
 
   const cleanedQuery = preprocessQuery(query);
+  if (!cleanedQuery) {
+    throw new Error("A non-empty question is required for retrieval");
+  }
+
   const queryEmbedding = await generateEmbedding(cleanedQuery);
   const results = search(queryEmbedding, topK);
 

@@ -3,8 +3,13 @@
  * final chatbot answer, grounded in retrieved context chunks.
  */
 
+const MODEL = "models/gemini-flash-latest";
+
+const GEMINI_API_KEY =
+  "your_gemini_api_key_here";
+
 const GENERATE_ENDPOINT =
-  "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent";
+  `https://generativelanguage.googleapis.com/v1beta/${MODEL}:generateContent?key=${GEMINI_API_KEY}`;
 
 const SYSTEM_INSTRUCTIONS = `You are Tax-Assist AI, an assistant that explains Pakistan personal income tax
 (for salaried individuals and freelancers) using ONLY the provided context.
@@ -20,26 +25,37 @@ Rules:
   licensed tax consultant before filing.`;
 
 export async function generateAnswer(query, contextText) {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) {
-    throw new Error("GEMINI_API_KEY is not set in environment variables");
-  }
-
   const prompt = `${SYSTEM_INSTRUCTIONS}\n\nContext:\n${contextText}\n\nUser question: ${query}`;
 
-  const res = await fetch(`${GENERATE_ENDPOINT}?key=${apiKey}`, {
+  const res = await fetch(GENERATE_ENDPOINT, {
     method: "POST",
-    headers: { "Content-Type": "application/json" },
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
-      contents: [{ parts: [{ text: prompt }] }],
+      contents: [
+        {
+          parts: [
+            {
+              text: prompt,
+            },
+          ],
+        },
+      ],
     }),
   });
 
   if (!res.ok) {
     const errBody = await res.text();
-    throw new Error(`Generation request failed: ${res.status} ${errBody}`);
+    throw new Error(
+      `Generation request failed: ${res.status} ${errBody}`
+    );
   }
 
   const data = await res.json();
-  return data.candidates?.[0]?.content?.parts?.[0]?.text || "No response generated.";
+
+  return (
+    data.candidates?.[0]?.content?.parts?.[0]?.text ||
+    "No response generated."
+  );
 }

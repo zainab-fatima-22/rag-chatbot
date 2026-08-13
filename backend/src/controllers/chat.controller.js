@@ -7,7 +7,7 @@ export const sendMessage = async (req, res) => {
   try {
     const { message } = req.body;
 
-    if (!message || !message.trim()) {
+    if (typeof message !== "string" || !message.trim()) {
       return res.status(400).json({ message: "message is required" });
     }
 

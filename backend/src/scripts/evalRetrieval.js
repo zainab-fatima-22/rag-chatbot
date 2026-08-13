@@ -17,8 +17,8 @@ dotenv.config();
 const sampleQuestions = [
   "What documents do I need to file my taxes?",
   "What is the difference between salaried and non-salaried filers?",
-  "What are the tax slabs for this year?",
-  "Do freelancers need to register for an NTN?",
+  "What are the salaried tax slabs for Tax Year 2027?",
+  "I am a freelancer working for a foreign client. What tax rate may apply to eligible IT export income?",
 ];
 
 async function runEval() {
