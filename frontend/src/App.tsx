@@ -14,30 +14,34 @@ function App() {
   return (
     <AuthProvider>
       <BrowserRouter>
-        <Navbar />
-        <Routes>
-          <Route path="/" element={<LandingPage />} />
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/register" element={<RegisterPage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/faq" element={<FaqPage />} />
-          <Route
-            path="/chat"
-            element={
-              <ProtectedRoute>
-                <ChatPage />
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/profile"
-            element={
-              <ProtectedRoute>
-                <ProfilePage />
-              </ProtectedRoute>
-            }
-          />
-        </Routes>
+        <div className="h-screen flex flex-col overflow-hidden bg-paper">
+          <Navbar />
+          <div className="flex-1 overflow-y-auto">
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/login" element={<LoginPage />} />
+              <Route path="/register" element={<RegisterPage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/faq" element={<FaqPage />} />
+              <Route
+                path="/chat"
+                element={
+                  <ProtectedRoute>
+                    <ChatPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <ProfilePage />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
+          </div>
+        </div>
       </BrowserRouter>
     </AuthProvider>
   );

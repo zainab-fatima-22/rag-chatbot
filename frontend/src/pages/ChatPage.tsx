@@ -13,8 +13,15 @@ interface Message {
 const WELCOME_MESSAGE: Message = {
   role: "assistant",
   content:
-    "Hi! I can help explain Pakistan personal income tax — slabs, deductions, and filing steps. Ask me anything.",
+    "Hi! I can help explain Pakistan personal income tax — slabs, deductions, and filing steps. Ask me anything, or try one of the questions below to get started.",
 };
+
+const SUGGESTED_QUESTIONS = [
+  "What documents do I need to file?",
+  "Am I a salaried or non salaried filer?",
+  "What happens if I file late?",
+  "Do freelancers need an NTN?",
+];
 
 export default function ChatPage() {
   const { user } = useAuth();
@@ -59,9 +66,11 @@ export default function ChatPage() {
     }
   };
 
+  const showSuggestions = !historyLoading && messages.length === 1;
+
   return (
-    <div className="min-h-[calc(100vh-40px)] flex flex-col bg-paper-dim">
-      <div className="bg-ink text-paper px-4 py-2.5 text-center">
+    <div className="h-full flex flex-col bg-paper-dim">
+      <div className="bg-ink text-paper px-4 py-2.5 text-center shrink-0">
         <p className="font-mono text-xs tracking-[0.15em]">CASE FILE — INCOME TAX INQUIRY</p>
       </div>
 
@@ -76,6 +85,26 @@ export default function ChatPage() {
         ) : (
           messages.map((m, i) => <ChatBubble key={i} role={m.role} content={m.content} />)
         )}
+
+        {showSuggestions && (
+          <div className="mt-2 mb-4">
+            <p className="font-mono text-[10px] tracking-[0.2em] text-brass-dark mb-2">
+              TRY ASKING
+            </p>
+            <div className="flex flex-wrap gap-2">
+              {SUGGESTED_QUESTIONS.map((q) => (
+                <button
+                  key={q}
+                  onClick={() => handleSend(q)}
+                  className="text-xs border border-paper-line bg-paper hover:border-brass hover:text-ink-dark text-muted rounded-full px-3 py-1.5 transition-colors"
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
         {loading && <TypingIndicator />}
         {error && (
           <p className="text-xs text-red-700 bg-red-50 border border-red-200 rounded px-3 py-2 text-center" role="alert">
@@ -85,7 +114,7 @@ export default function ChatPage() {
         <div ref={bottomRef} />
       </main>
 
-      <div className="max-w-2xl w-full mx-auto">
+      <div className="max-w-2xl w-full mx-auto shrink-0">
         <ChatInput onSend={handleSend} disabled={loading} />
       </div>
     </div>
