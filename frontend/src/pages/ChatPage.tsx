@@ -4,10 +4,12 @@ import ChatInput from "../components/ChatInput";
 import TypingIndicator from "../components/TypingIndicator";
 import { useAuth } from "../context/AuthContext";
 import { sendChatMessage, getChatHistory } from "../services/api";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 interface Message {
   role: "user" | "assistant";
   content: string;
+  sources?: { source?: string; score?: number }[];
 }
 
 const WELCOME_MESSAGE: Message = {
@@ -24,6 +26,7 @@ const SUGGESTED_QUESTIONS = [
 ];
 
 export default function ChatPage() {
+  usePageTitle("Chat");
   const { user } = useAuth();
   const [messages, setMessages] = useState<Message[]>([WELCOME_MESSAGE]);
   const [loading, setLoading] = useState(false);
@@ -58,7 +61,7 @@ export default function ChatPage() {
 
     try {
       const data = await sendChatMessage(content, user!.token);
-      setMessages((prev) => [...prev, { role: "assistant", content: data.answer }]);
+      setMessages((prev) => [...prev, { role: "assistant", content: data.answer, sources: data.sources }]);
     } catch (err) {
       setError(err instanceof Error ? err.message : "Something went wrong");
     } finally {
@@ -83,7 +86,7 @@ export default function ChatPage() {
         {historyLoading ? (
           <p className="text-xs text-muted font-mono text-center">LOADING RECORD...</p>
         ) : (
-          messages.map((m, i) => <ChatBubble key={i} role={m.role} content={m.content} />)
+          messages.map((m, i) => <ChatBubble key={i} role={m.role} content={m.content} sources={m.sources} />)
         )}
 
         {showSuggestions && (

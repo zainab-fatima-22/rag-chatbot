@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import StampMark from "../components/StampMark";
 import Footer from "../components/Footer";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const entries = [
   { label: "Tax slabs", detail: "Know exactly which bracket applies to your income" },
@@ -34,6 +35,7 @@ const audiences = [
 ];
 
 export default function LandingPage() {
+  usePageTitle("Home");
   return (
     <div className="min-h-full flex flex-col">
       <div className="flex-1">

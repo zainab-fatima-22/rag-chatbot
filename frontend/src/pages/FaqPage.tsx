@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const faqs = [
   {
@@ -29,6 +30,7 @@ const faqs = [
 ];
 
 export default function FaqPage() {
+  usePageTitle("FAQ");
   return (
     <div className="min-h-full flex flex-col">
       <div className="flex-1 bg-paper-dim px-4 py-16">

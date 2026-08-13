@@ -4,8 +4,10 @@ import { useAuth } from "../context/AuthContext";
 import { getChatHistory } from "../services/api";
 import StampMark from "../components/StampMark";
 import Footer from "../components/Footer";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 export default function ProfilePage() {
+  usePageTitle("Profile");
   const { user } = useAuth();
   const [questionCount, setQuestionCount] = useState<number | null>(null);
 

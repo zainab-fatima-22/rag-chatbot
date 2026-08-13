@@ -1,5 +1,6 @@
 import StampMark from "../components/StampMark";
 import Footer from "../components/Footer";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 const stack = [
   { group: "Frontend", items: "React, TypeScript, Tailwind CSS, Vite" },
@@ -9,6 +10,7 @@ const stack = [
 ];
 
 export default function AboutPage() {
+  usePageTitle("About");
   return (
     <div className="min-h-full flex flex-col">
       <div className="flex-1 bg-paper-dim px-4 py-16">

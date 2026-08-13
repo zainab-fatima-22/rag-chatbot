@@ -2,8 +2,10 @@ import { useState, FormEvent } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import { useAuth } from "../context/AuthContext";
 import StampMark from "../components/StampMark";
+import { usePageTitle } from "../hooks/usePageTitle";
 
 export default function RegisterPage() {
+  usePageTitle("Register");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
