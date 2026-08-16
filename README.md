@@ -346,4 +346,4 @@ A short walkthrough for presenting the project.
 
 ## Development Reports
 
-A day by day account of the full development process, from project setup through the four module roadmap and the additional enhancement work, is available in [REPORTS.md](REPORTS.md).
+A day by day account of the full development process, from project setup through the four module roadmap and the additional enhancement work, is available in [REPORTS.md](REPORTS.md). The project was built over the period from July 10 to August 17, 2026.
