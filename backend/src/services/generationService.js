@@ -3,13 +3,12 @@
  * final chatbot answer, grounded in retrieved context chunks.
  */
 
-const MODEL = "models/gemini-flash-latest";
+import { env } from "../config/env.js";
 
-const GEMINI_API_KEY =
-  "your_gemini_api_key_here";
+const MODEL = env.generationModel;
 
 const GENERATE_ENDPOINT =
-  `https://generativelanguage.googleapis.com/v1beta/${MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+  `https://generativelanguage.googleapis.com/v1beta/${MODEL}:generateContent?key=${env.geminiApiKey}`;
 
 const SYSTEM_INSTRUCTIONS = `You are Tax-Assist AI, an assistant that explains Pakistan personal income tax
 (for salaried individuals and freelancers) using ONLY the provided context.

@@ -2,15 +2,15 @@
  * Embedding service — wraps Google's Gemini embedding API.
  *
  * Uses the gemini-embedding-001 model via the Generative Language API.
+ * The API key is read from the environment (GEMINI_API_KEY), never hardcoded.
  */
 
-const MODEL = "models/gemini-embedding-001";
+import { env } from "../config/env.js";
 
-const GEMINI_API_KEY =
-  "your_gemini_api_key_here";
+const MODEL = env.embeddingModel;
 
 const EMBED_ENDPOINT =
-  `https://generativelanguage.googleapis.com/v1beta/${MODEL}:embedContent?key=${GEMINI_API_KEY}`;
+  `https://generativelanguage.googleapis.com/v1beta/${MODEL}:embedContent?key=${env.geminiApiKey}`;
 
 // Simple in-memory cache
 const embeddingCache = new Map();

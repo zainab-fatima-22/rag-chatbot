@@ -11,15 +11,18 @@ import path from "path";
  * require changing this file, not the callers.
  */
 
-const STORE_PATH = path.join(process.cwd(), "data", "vector-store.json");
+function getStorePath() {
+  return process.env.VECTOR_STORE_PATH || path.join(process.cwd(), "data", "vector-store.json");
+}
 
 function loadStore() {
-  if (!fs.existsSync(STORE_PATH)) return [];
-  return JSON.parse(fs.readFileSync(STORE_PATH, "utf-8"));
+  const storePath = getStorePath();
+  if (!fs.existsSync(storePath)) return [];
+  return JSON.parse(fs.readFileSync(storePath, "utf-8"));
 }
 
 function saveStore(records) {
-  fs.writeFileSync(STORE_PATH, JSON.stringify(records, null, 2));
+  fs.writeFileSync(getStorePath(), JSON.stringify(records, null, 2));
 }
 
 function cosineSimilarity(a, b) {

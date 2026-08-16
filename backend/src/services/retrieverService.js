@@ -9,7 +9,7 @@ const DEFAULT_TOP_K = 4;
  * that don't add retrieval signal ("hey", "can you tell me", etc.), so the
  * embedding better reflects the actual tax question being asked.
  */
-function preprocessQuery(query) {
+export function preprocessQuery(query) {
   const original = typeof query === "string" ? query.trim() : "";
   if (!original) return "";
 

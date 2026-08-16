@@ -1,16 +1,22 @@
 import fs from "fs";
+import os from "os";
 import path from "path";
 import { addDocuments, search, clearStore } from "../services/vectorStore.js";
 
-const STORE_PATH = path.join(process.cwd(), "data", "vector-store.json");
+const TEMP_STORE = path.join(os.tmpdir(), `vector-store-test-${Date.now()}.json`);
 
 describe("vectorStore", () => {
+  beforeAll(() => {
+    process.env.VECTOR_STORE_PATH = TEMP_STORE;
+  });
+
   beforeEach(() => {
     clearStore();
   });
 
   afterAll(() => {
-    if (fs.existsSync(STORE_PATH)) fs.writeFileSync(STORE_PATH, "[]");
+    delete process.env.VECTOR_STORE_PATH;
+    if (fs.existsSync(TEMP_STORE)) fs.unlinkSync(TEMP_STORE);
   });
 
   test("search returns the most similar document first", () => {
