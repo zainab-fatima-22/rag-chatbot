@@ -1,3 +1,7 @@
+Project Overview
+
+Tax Assist AI combines a modern web application with Retrieval Augmented Generation to make Pakistan's personal income tax information easier to understand. Instead of generating answers from general model knowledge, the system first searches its curated tax knowledge base and then uses the retrieved information to generate a contextual response.
+
 # Tax Assist AI
 
 Tax Assist AI is a Retrieval Augmented Generation (RAG) chatbot that helps salaried individuals and freelancers in Pakistan understand personal income tax. It answers plain language questions about tax slabs, deductions, filing steps, and deadlines by retrieving the relevant passages from official Federal Board of Revenue (FBR) source documents instead of relying on a generic language model's memory. Grounding answers in real source material keeps them factual, citable, and much less prone to hallucination.
@@ -6,21 +10,21 @@ The scope is intentionally limited to personal income tax for salaried individua
 
 ## Table of Contents
 
-* [Why This Project Exists](#why-this-project-exists)
-* [Issues Faced During Development](#issues-faced-during-development)
-* [What This Project Solves](#what-this-project-solves)
-* [Features](#features)
-* [Technology Stack](#technology-stack)
-* [Project Structure](#project-structure)
-* [How It Works](#how-it-works)
-* [API Reference](#api-reference)
-* [Getting Started](#getting-started)
-* [Testing](#testing)
-* [Deployment](#deployment)
-* [Knowledge Base](#knowledge-base)
-* [Demo Script](#demo-script)
-* [Known Limitations and Next Steps](#known-limitations-and-next-steps)
-* [Development Reports](#development-reports)
+- [Why This Project Exists](#why-this-project-exists)
+- [Issues Faced During Development](#issues-faced-during-development)
+- [What This Project Solves](#what-this-project-solves)
+- [Features](#features)
+- [Technology Stack](#technology-stack)
+- [Project Structure](#project-structure)
+- [How It Works](#how-it-works)
+- [API Reference](#api-reference)
+- [Getting Started](#getting-started)
+- [Testing](#testing)
+- [Deployment](#deployment)
+- [Knowledge Base](#knowledge-base)
+- [Demo Script](#demo-script)
+- [Known Limitations and Next Steps](#known-limitations-and-next-steps)
+- [Development Reports](#development-reports)
 
 ## Why This Project Exists
 
@@ -32,51 +36,51 @@ Tax Assist AI addresses this directly. It grounds every answer in a curated set 
 
 The project surfaced a number of real engineering and product problems along the way, several of which shaped the final design.
 
-* **Hallucination risk.** A raw language model often invents tax rates. The project answered this by moving to a RAG pipeline that only passes retrieved source context into the generation model, and by instructing the model to say clearly when the context does not contain an answer.
-* **Vague questions.** A question such as "how much tax will I pay" cannot be answered without knowing the income and filer type. The assistant now asks for the missing detail instead of guessing.
-* **Unbounded conversation history.** Over a long session a user's saved messages could grow without limit and slow down history loads. History is now capped to the most recent one hundred messages.
-* **Duplicate accounts from email casing.** The same address typed with different capital letters was treated as separate accounts. Emails are now normalized (trimmed and lowercased) before registration and login.
-* **Duplicate form submissions.** The login and register buttons could be clicked repeatedly while a request was in flight. The buttons now disable and show a loading state during submission.
-* **Repeated embedding work.** Identical or repeated questions were sent to the embedding service on every request. An in memory embedding cache now avoids the redundant work within a server session.
-* **Hardcoded API keys.** Early versions embedded the Gemini API key directly in source files. These are now read from environment configuration only, and the key never appears in the repository.
-* **Cross platform test failures.** The test runner script was not compatible with Windows. It now invokes the Jest binary directly so the same command works on any operating system.
-* **Uncontrolled rate limiting memory.** The in memory rate limiter could grow without bound on a long running server. Expired buckets are now cleaned up on a timer.
-* **Stale service identity.** The health endpoint still reported the original university chatbot project name. It now reports the actual service name.
+- **Hallucination risk.** A raw language model often invents tax rates. The project answered this by moving to a RAG pipeline that only passes retrieved source context into the generation model, and by instructing the model to say clearly when the context does not contain an answer.
+- **Vague questions.** A question such as "how much tax will I pay" cannot be answered without knowing the income and filer type. The assistant now asks for the missing detail instead of guessing.
+- **Unbounded conversation history.** Over a long session a user's saved messages could grow without limit and slow down history loads. History is now capped to the most recent one hundred messages.
+- **Duplicate accounts from email casing.** The same address typed with different capital letters was treated as separate accounts. Emails are now normalized (trimmed and lowercased) before registration and login.
+- **Duplicate form submissions.** The login and register buttons could be clicked repeatedly while a request was in flight. The buttons now disable and show a loading state during submission.
+- **Repeated embedding work.** Identical or repeated questions were sent to the embedding service on every request. An in memory embedding cache now avoids the redundant work within a server session.
+- **Hardcoded API keys.** Early versions embedded the Gemini API key directly in source files. These are now read from environment configuration only, and the key never appears in the repository.
+- **Cross platform test failures.** The test runner script was not compatible with Windows. It now invokes the Jest binary directly so the same command works on any operating system.
+- **Uncontrolled rate limiting memory.** The in memory rate limiter could grow without bound on a long running server. Expired buckets are now cleaned up on a timer.
+- **Stale service identity.** The health endpoint still reported the original university chatbot project name. It now reports the actual service name.
 
 ## What This Project Solves
 
-* It makes complex tax rules answerable in plain language, no jargon required.
-* It grounds answers in official FBR documents and the Income Tax Ordinance, and cites the source of each answer.
-* It walks a first time filer through registration, IRIS filing, and the Active Taxpayer List basics.
-* It differentiates the rules that matter most to salaried employees and to freelancers, including eligible IT export income.
-* It preserves a user's conversation history so a session can be resumed after a page refresh.
-* It protects accounts with hashed passwords and token based sessions, and it normalizes emails so the same person cannot end up with duplicate accounts.
-* It keeps responses within a defined scope and reminds users to confirm figures with FBR or a licensed consultant before filing.
+- It makes complex tax rules answerable in plain language, no jargon required.
+- It grounds answers in official FBR documents and the Income Tax Ordinance, and cites the source of each answer.
+- It walks a first time filer through registration, IRIS filing, and the Active Taxpayer List basics.
+- It differentiates the rules that matter most to salaried employees and to freelancers, including eligible IT export income.
+- It preserves a user's conversation history so a session can be resumed after a page refresh.
+- It protects accounts with hashed passwords and token based sessions, and it normalizes emails so the same person cannot end up with duplicate accounts.
+- It keeps responses within a defined scope and reminds users to confirm figures with FBR or a licensed consultant before filing.
 
 ## Features
 
-* Registration and login with bcrypt hashed passwords and seven day JSON Web Token sessions.
-* A protected chat page that runs the full RAG pipeline and returns grounded answers with source citations.
-* Saved conversation history per user, reloaded automatically when the chat page opens.
-* An in memory embedding cache so repeated questions do not hit the embedding service twice.
-* Query preprocessing that strips filler phrases so the embedding focuses on the real tax content.
-* Configurable retrieval depth and a minimum relevance threshold so low quality matches never reach the prompt.
-* Rate limiting middleware, request logging, and centralized error handling.
-* A ledger and ink stamp visual identity with a deep pine green and brass gold palette on a warm paper background.
-* Accessibility improvements including proper labels, a live chat region for screen readers, and automatic scroll to the newest message.
+- Registration and login with bcrypt hashed passwords and seven day JSON Web Token sessions.
+- A protected chat page that runs the full RAG pipeline and returns grounded answers with source citations.
+- Saved conversation history per user, reloaded automatically when the chat page opens.
+- An in memory embedding cache so repeated questions do not hit the embedding service twice.
+- Query preprocessing that strips filler phrases so the embedding focuses on the real tax content.
+- Configurable retrieval depth and a minimum relevance threshold so low quality matches never reach the prompt.
+- Rate limiting middleware, request logging, and centralized error handling.
+- A ledger and ink stamp visual identity with a deep pine green and brass gold palette on a warm paper background.
+- Accessibility improvements including proper labels, a live chat region for screen readers, and automatic scroll to the newest message.
 
 ## Technology Stack
 
-| Layer | Technology |
-| :--- | :--- |
-| Frontend | React, TypeScript, Tailwind CSS, Vite |
-| Backend | Node.js, Express.js |
-| Database | MongoDB for users and conversation history |
-| Embeddings and generation | Google Gemini API |
-| Retrieval | Cosine similarity search over chunked source documents |
-| Authentication | bcrypt password hashing, JSON Web Tokens |
-| Testing | Jest |
-| Deployment | Render for the backend, Vercel for the frontend |
+| Layer                     | Technology                                             |
+| :------------------------ | :----------------------------------------------------- |
+| Frontend                  | React, TypeScript, Tailwind CSS, Vite                  |
+| Backend                   | Node.js, Express.js                                    |
+| Database                  | MongoDB for users and conversation history             |
+| Embeddings and generation | Google Gemini API                                      |
+| Retrieval                 | Cosine similarity search over chunked source documents |
+| Authentication            | bcrypt password hashing, JSON Web Tokens               |
+| Testing                   | Jest                                                   |
+| Deployment                | Render for the backend, Vercel for the frontend        |
 
 ## Project Structure
 
@@ -175,7 +179,11 @@ Returns the service status. No authentication required.
 Body:
 
 ```json
-{ "name": "Zainab Fatima", "email": "zainab@example.com", "password": "yourpassword" }
+{
+  "name": "Zainab Fatima",
+  "email": "zainab@example.com",
+  "password": "yourpassword"
+}
 ```
 
 Response 201, the user object plus a JWT `token`.
@@ -217,7 +225,9 @@ Response 200:
 ```json
 {
   "answer": "...",
-  "sources": [{ "source": "04-registration-iris-filing-and-atl.md", "score": 0.81 }]
+  "sources": [
+    { "source": "04-registration-iris-filing-and-atl.md", "score": 0.81 }
+  ]
 }
 ```
 
@@ -239,9 +249,9 @@ A Postman collection covering every endpoint is included at `backend/postman_col
 
 ### Prerequisites
 
-* Node.js 18 or later
-* MongoDB (local instance or a cloud connection string)
-* A Google Gemini API key
+- Node.js 18 or later
+- MongoDB (local instance or a cloud connection string)
+- A Google Gemini API key
 
 ### Backend
 
@@ -307,9 +317,9 @@ The frontend runs on `http://localhost:5173` by default and talks to the backend
 
 The backend includes Jest unit tests covering the document chunking utility, the vector store search behavior, and the retrieval preprocessing helpers. Run them with `npm test` in the `backend` directory.
 
-* Text chunking tests confirm the character based splitter produces overlapping chunks, returns a single chunk for short text, filters empty chunks, and splits markdown documents by section header.
-* Vector store tests confirm search returns the most similar document first and handles an empty store gracefully.
-* Retrieval helper tests confirm filler phrases are stripped and that a greeting alone is never turned into an empty embedding request.
+- Text chunking tests confirm the character based splitter produces overlapping chunks, returns a single chunk for short text, filters empty chunks, and splits markdown documents by section header.
+- Vector store tests confirm search returns the most similar document first and handles an empty store gracefully.
+- Retrieval helper tests confirm filler phrases are stripped and that a greeting alone is never turned into an empty embedding request.
 
 There is also a manual retrieval evaluation script (`npm run eval:retrieval`) and a Postman collection in `backend/postman_collection.json` for exercising the API by hand.
 
@@ -338,11 +348,11 @@ A short walkthrough for presenting the project.
 
 ## Known Limitations and Next Steps
 
-* The knowledge base is a curated Tax Year 2027 starter set. Rates change with each Finance Act, so the source documents should be refreshed whenever FBR publishes new material.
-* The vector store is not built for production scale. A dedicated vector database such as ChromaDB would be the natural upgrade once the document set grows.
-* Each user currently has one running conversation thread. Multiple named conversations would require a conversation identifier on the chat endpoint and a listing endpoint.
-* Responses are not streamed. The chat waits for the full answer before displaying it; streaming would improve perceived responsiveness.
-* Saved filing details and document uploads are planned for a future update.
+- The knowledge base is a curated Tax Year 2027 starter set. Rates change with each Finance Act, so the source documents should be refreshed whenever FBR publishes new material.
+- The vector store is not built for production scale. A dedicated vector database such as ChromaDB would be the natural upgrade once the document set grows.
+- Each user currently has one running conversation thread. Multiple named conversations would require a conversation identifier on the chat endpoint and a listing endpoint.
+- Responses are not streamed. The chat waits for the full answer before displaying it; streaming would improve perceived responsiveness.
+- Saved filing details and document uploads are planned for a future update.
 
 ## Development Reports
 

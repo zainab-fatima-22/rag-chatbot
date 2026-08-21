@@ -20,7 +20,7 @@ export const env = {
   mongoUri: process.env.MONGODB_URI,
   geminiApiKey: process.env.GEMINI_API_KEY,
   embeddingModel: process.env.GEMINI_EMBEDDING_MODEL || "models/gemini-embedding-001",
-  generationModel: process.env.GEMINI_GENERATION_MODEL || "models/gemini-2.5-flash-lite",
+  generationModel: process.env.GEMINI_GENERATION_MODEL || "models/gemini-flash-latest",
   jwtSecret: process.env.JWT_SECRET,
   clientUrl: process.env.CLIENT_URL,
   nodeEnv: process.env.NODE_ENV || "development",

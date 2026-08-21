@@ -21,6 +21,24 @@ dotenv.config();
 
 const RAW_DOCS_DIR = path.join(process.cwd(), "data", "raw-docs");
 
+/**
+ * Drops chunks that carry no usable content, such as a document title on its
+ * own or a YAML frontmatter block. These short heading chunks match queries
+ * by keyword but push real content out of the top retrieval results.
+ */
+function isUsefulChunk(chunk) {
+  return chunk
+    .split("\n")
+    .map((line) => line.trim())
+    .some(
+      (line) =>
+        line &&
+        !line.startsWith("#") &&
+        !line.startsWith("---") &&
+        !/^[a-z_]+:\s?/.test(line)
+    );
+}
+
 function readRawDocs() {
   const files = fs.readdirSync(RAW_DOCS_DIR).filter((f) => f.endsWith(".md"));
   return files.map((file) => ({
@@ -35,7 +53,7 @@ async function runIngestion() {
 
   const allChunks = [];
   for (const doc of docs) {
-    const chunks = chunkByMarkdownSection(doc.content);
+    const chunks = chunkByMarkdownSection(doc.content).filter(isUsefulChunk);
     chunks.forEach((chunk, i) => {
       allChunks.push({
         text: chunk,
