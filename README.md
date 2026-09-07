@@ -357,3 +357,11 @@ A short walkthrough for presenting the project.
 ## Development Reports
 
 A day by day account of the full development process, from project setup through the four module roadmap and the additional enhancement work, is available in [REPORTS.md](REPORTS.md). The project was built over the period from July 10 to August 17, 2026.
+
+## Development Notes
+
+During development, the project was improved in small iterations to keep the application stable and easier to maintain. Authentication, RAG retrieval, conversation history, validation, error handling, and testing were added and refined step by step.
+
+The project also focuses on keeping the code modular by separating frontend components, backend routes, controllers, middleware, models, and services. This makes individual parts easier to test, update, and extend in future versions.
+
+Future improvements can include adding multiple conversation threads, streaming responses, refreshing the knowledge base automatically when new FBR documents are published, and replacing the lightweight file based vector store with a dedicated vector database when the project grows.
