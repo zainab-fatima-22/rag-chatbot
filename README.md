@@ -365,3 +365,11 @@ During development, the project was improved in small iterations to keep the app
 The project also focuses on keeping the code modular by separating frontend components, backend routes, controllers, middleware, models, and services. This makes individual parts easier to test, update, and extend in future versions.
 
 Future improvements can include adding multiple conversation threads, streaming responses, refreshing the knowledge base automatically when new FBR documents are published, and replacing the lightweight file based vector store with a dedicated vector database when the project grows.
+
+## Security Notes
+
+The application follows several basic security practices to protect user accounts and application data. Passwords are stored using bcrypt hashing instead of plain text, while authenticated requests use JSON Web Tokens for session protection.
+
+Sensitive configuration such as the Gemini API key and database credentials is loaded through environment variables rather than being stored directly in the source code. Protected API routes also verify the user's authentication token before allowing access.
+
+The application additionally uses request validation, centralized error handling, rate limiting, and normalized email addresses to reduce common authentication and API related issues.
