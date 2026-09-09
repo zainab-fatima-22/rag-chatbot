@@ -26,6 +26,10 @@ The scope is intentionally limited to personal income tax for salaried individua
 - [Known Limitations and Next Steps](#known-limitations-and-next-steps)
 - [Development Reports](#development-reports)
 
+## Data consistency and component communication
+
+Using WardrobeContext also helps keep the application data consistent across different screens. When a user makes a change from one component, the updated state is shared with all other components that use the context, so they can immediately display the latest information. This avoids duplicated state and reduces the need for complex prop passing between parent and child components. It also makes the application easier to maintain because the main wardrobe related logic is handled in one central place.
+
 ## Why This Project Exists
 
 Filing personal income tax in Pakistan is confusing for most people. Official FBR guidance is scattered across notices, guides, and ordinance text, the rules are dense with jargon, and the slab rates change with every Finance Act. A generic chatbot often answers confidently but incorrectly because it has no access to the current source material.
